@@ -65,9 +65,7 @@ jobs:
         id: run
         run: echo "::set-output name=container::$(docker run -d policy-as-code:latest)"
       - name: Run Integration Tests
-        run: echo "Add Inspec integration tests here"
-      - name: Run CIS Benchmark for Docker
-        run: echo "Add Inspec Docker CIS benchmarks here"
+        run: inspec exec test/integration -t docker://${{steps.run.outputs.container}}
       - name: Clean up container
         if: ${{ always() }}
         run: docker rm -f ${{steps.run.outputs.container}}
